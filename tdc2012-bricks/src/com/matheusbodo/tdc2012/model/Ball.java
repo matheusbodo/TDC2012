@@ -13,12 +13,12 @@ public class Ball {
 	private VerticalDirection verticalDirection = VerticalDirection.UP;
 	private HorizontalDirection horizontalDirection = HorizontalDirection.RIGHT;
 	
-	public void update(float deltaTime, KickBar kickBar) {
+	public void update(float deltaTime, Platform platform) {
 		
 		area.x = area.x + deltaTime * HORIZONTAL_SPEED * horizontalDirection.getMultiplier();
 		area.y = area.y + deltaTime * VERTICAL_SPEED * verticalDirection.getMultiplier();
 		
-		if (CollisionDetector.checkTopCollision(area, kickBar.getArea())) {
+		if (CollisionDetector.checkTopCollision(area, platform.getArea())) {
 			verticalDirection = VerticalDirection.UP;
 			return;
 		}
@@ -40,10 +40,10 @@ public class Ball {
 		}
 	}
 	
-	public void updateStartPosition(KickBar kickBar) {
-		Rectangle kickBarArea = kickBar.getArea();
-		area.x = kickBarArea.x + (kickBarArea.width - area.width) / 2;
-		area.y = kickBarArea.y + kickBarArea.height;
+	public void updateStartPosition(Platform platform) {
+		Rectangle platformArea = platform.getArea();
+		area.x = platformArea.x + (platformArea.width - area.width) / 2;
+		area.y = platformArea.y + platformArea.height;
 	}
 	
 	public Rectangle getArea() {

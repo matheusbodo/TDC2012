@@ -10,14 +10,14 @@ public class GameAssets {
 	
 	private TextureRegion backgroundWaterRegion;
 	private TextureRegion logoRegion;
-	private TextureRegion kickBarRegion;
+	private TextureRegion platformRegion;
 	private TextureRegion ballRegion;
 	
 	public void load() {
 		texture = new Texture(Gdx.files.internal("data/textures.png"));
 		backgroundWaterRegion = new TextureRegion(texture, 0, 0, 256, 256);
 		logoRegion = new TextureRegion(texture, 256, 462, 256, 50);
-		kickBarRegion = new TextureRegion(texture, 259, 296, 80, 20);
+		platformRegion = new TextureRegion(texture, 259, 296, 80, 20);
 		ballRegion = new TextureRegion(texture, 256, 286, 10, 10);
 	}
 	
@@ -37,8 +37,8 @@ public class GameAssets {
 		return logoRegion;
 	}
 	
-	public TextureRegion getKickBarRegion() {
-		return kickBarRegion;
+	public TextureRegion getPlatformRegion() {
+		return platformRegion;
 	}
 	
 	public TextureRegion getBallRegion() {

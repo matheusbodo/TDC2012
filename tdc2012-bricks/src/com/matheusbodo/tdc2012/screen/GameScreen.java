@@ -13,7 +13,7 @@ import com.matheusbodo.tdc2012.BricksInputProcessor;
 import com.matheusbodo.tdc2012.GameAssets;
 import com.matheusbodo.tdc2012.model.Ball;
 import com.matheusbodo.tdc2012.model.GameBoard;
-import com.matheusbodo.tdc2012.model.KickBar;
+import com.matheusbodo.tdc2012.model.Platform;
 
 public class GameScreen implements Screen {
 
@@ -48,9 +48,9 @@ public class GameScreen implements Screen {
 		GameAssets assets = game.getAssets();
 		batch.draw(assets.getBackgroundWaterRegion(), 0, 0, 4.8f, 8);
 		
-		KickBar kickBar = gameBoard.getKickBar();
-		Rectangle kickBarArea = kickBar.getArea();
-		batch.draw(assets.getKickBarRegion(), kickBarArea.x, kickBarArea.y, kickBarArea.width, kickBarArea.height);
+		Platform platform = gameBoard.getPlatform();
+		Rectangle platformArea = platform.getArea();
+		batch.draw(assets.getPlatformRegion(), platformArea.x, platformArea.y, platformArea.width, platformArea.height);
 		
 		Ball ball = gameBoard.getBall();
 		Rectangle ballArea = ball.getArea();
@@ -81,9 +81,9 @@ public class GameScreen implements Screen {
 	public boolean touchDragged(int x, int y) {
 		touchPoint.set(x, y, 0);
 		camera.unproject(touchPoint);
-		KickBar kickBar = gameBoard.getKickBar();
-		Rectangle kickBarArea = kickBar.getArea();
-		kickBar.setPosition(touchPoint.x - kickBarArea.width / 2, kickBarArea.y);
+		Platform platform = gameBoard.getPlatform();
+		Rectangle platformArea = platform.getArea();
+		platform.setPosition(touchPoint.x - platformArea.width / 2, platformArea.y);
 		return true;
 	}
 }

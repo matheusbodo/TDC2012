@@ -5,18 +5,18 @@ public class GameBoard {
 	public static final float WIDTH = 4.8f;
 	public static final float HEIGHT = 8.0f;
 	
-	private KickBar kickBar;
+	private Platform platform;
 	
 	private Ball ball;
 	
 	public void createGame() {
-		kickBar = new KickBar();
+		platform = new Platform();
 		ball = new Ball();
-		ball.updateStartPosition(kickBar);
+		ball.updateStartPosition(platform);
 	}
 	
-	public KickBar getKickBar() {
-		return kickBar;
+	public Platform getPlatform() {
+		return platform;
 	}
 	
 	public Ball getBall() {
@@ -24,6 +24,6 @@ public class GameBoard {
 	}
 
 	public void update(float deltaTime) {
-		ball.update(deltaTime, kickBar);
+		ball.update(deltaTime, platform);
 	}
 }
