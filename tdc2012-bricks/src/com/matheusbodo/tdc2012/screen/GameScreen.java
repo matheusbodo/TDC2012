@@ -1,5 +1,7 @@
 package com.matheusbodo.tdc2012.screen;
 
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -9,6 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.matheusbodo.tdc2012.BricksGame;
 import com.matheusbodo.tdc2012.GameAssets;
 import com.matheusbodo.tdc2012.model.Ball;
+import com.matheusbodo.tdc2012.model.Brick;
 import com.matheusbodo.tdc2012.model.GameBoard;
 import com.matheusbodo.tdc2012.model.Platform;
 
@@ -42,6 +45,12 @@ public class GameScreen implements ClickableScreen {
 		Rectangle platformArea = platform.getArea();
 		batch.draw(assets.getPlatformRegion(), platformArea.x, platformArea.y, platformArea.width, platformArea.height);
 		
+		List<Brick> brickList = gameBoard.getBrickList();
+		for (Brick brick : brickList) {
+			Rectangle brickArea = brick.getArea();
+			batch.draw(assets.getBrickRegion(), brickArea.x, brickArea.y, brickArea.width, brickArea.height);
+		}
+		
 		Ball ball = gameBoard.getBall();
 		Rectangle ballArea = ball.getArea();
 		batch.draw(assets.getBallRegion(), ballArea.x, ballArea.y, ballArea.width, ballArea.height);
@@ -56,7 +65,7 @@ public class GameScreen implements ClickableScreen {
 		this.camera = new OrthographicCamera(4.8f, 8);
 		this.camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 		this.batch = new SpriteBatch();
-		this.gameBoard = new GameBoard();
+		this.gameBoard = new GameBoard(game.getAssets());
 		this.gameBoard.createGame();
 	}
 

@@ -1,11 +1,12 @@
 package com.matheusbodo.tdc2012.model;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.matheusbodo.tdc2012.CollisionDetector;
 
 public class Ball {
 
-	private static final float VERTICAL_SPEED = 2.5f;
-	private static final float HORIZONTAL_SPEED = 1.6f;
+	private static final float VERTICAL_SPEED = 3.5f;
+	private static final float HORIZONTAL_SPEED = 2.0f;
 	
 	private Rectangle area = new Rectangle(0, 0, 0.1f, 0.1f);
 	
@@ -23,32 +24,59 @@ public class Ball {
 		area.y = platformArea.y + platformArea.height;
 	}
 	
-	public void hitPlatform() {
+	public void hitObjectDown() {
 		verticalDirection = VerticalDirection.UP;
+	}
+	
+	public void hitObjectUp() {
+		verticalDirection = VerticalDirection.DOWN;
+	}
+	
+	public void hitObjectRight() {
+		horizontalDirection = HorizontalDirection.LEFT;
+	}
+	
+	public void hitObjectLeft() {
+		horizontalDirection = HorizontalDirection.RIGHT;
 	}
 	
 	public void hitLeftWall() {
 		area.x -= area.x;
-		horizontalDirection = HorizontalDirection.RIGHT;
+		hitObjectLeft();
 	}
 	
 	public void hitRightWall() {
 		area.x -= (area.x + area.width) - GameBoard.WIDTH;
-		horizontalDirection = HorizontalDirection.LEFT;
-	}
-	
-	public void hitDownWall() {
-		area.y -= area.y;
-		verticalDirection = VerticalDirection.UP;
+		hitObjectRight();
 	}
 	
 	public void hitTopWall() {
 		area.y -= (area.y + area.height) - GameBoard.HEIGHT;
-		verticalDirection = VerticalDirection.DOWN;
+		hitObjectUp();
 	}
 	
 	public Rectangle getArea() {
 		return area;
+	}
+
+	public boolean checkTopCollision(Rectangle collisionArea) {
+		return VerticalDirection.DOWN.equals(verticalDirection) && 
+				CollisionDetector.checkTopCollision(area, collisionArea);
+	}
+	
+	public boolean checkBottomCollision(Rectangle collisionArea) {
+		return VerticalDirection.UP.equals(verticalDirection) && 
+				CollisionDetector.checkBottomCollision(area, collisionArea);
+	}
+
+	public boolean checkLeftCollision(Rectangle collisionArea) {
+		return HorizontalDirection.RIGHT.equals(horizontalDirection) && 
+		CollisionDetector.checkLeftCollision(area, collisionArea);
+	}
+	
+	public boolean checkRightCollision(Rectangle collisionArea) {
+		return HorizontalDirection.LEFT.equals(horizontalDirection) && 
+		CollisionDetector.checkRightCollision(area, collisionArea);
 	}
 	
 }

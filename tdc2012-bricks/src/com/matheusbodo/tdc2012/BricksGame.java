@@ -18,6 +18,19 @@ public class BricksGame extends Game {
 		bricksInputProcessor = new BricksInputProcessor();
 		setScreen(new MenuScreen(this));
 		Gdx.input.setInputProcessor(bricksInputProcessor);
+		assets.getMusic().play();
+	}
+	
+	@Override
+	public void resume() {
+		super.resume();
+		assets.getMusic().play();
+	}
+	
+	@Override
+	public void pause() {
+		super.pause();
+		assets.getMusic().pause();
 	}
 	
 	public void setScreen(ClickableScreen screen) {
