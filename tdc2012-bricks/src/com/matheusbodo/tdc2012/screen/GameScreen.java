@@ -1,21 +1,18 @@
 package com.matheusbodo.tdc2012.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.matheusbodo.tdc2012.BricksGame;
-import com.matheusbodo.tdc2012.BricksInputProcessor;
 import com.matheusbodo.tdc2012.GameAssets;
 import com.matheusbodo.tdc2012.model.Ball;
 import com.matheusbodo.tdc2012.model.GameBoard;
 import com.matheusbodo.tdc2012.model.Platform;
 
-public class GameScreen implements Screen {
+public class GameScreen implements ClickableScreen {
 
 	private BricksGame game;
 	private SpriteBatch batch;
@@ -26,13 +23,6 @@ public class GameScreen implements Screen {
 	
 	public GameScreen(BricksGame game) {
 		this.game = game;
-		this.camera = new OrthographicCamera(4.8f, 8);
-		this.camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
-		this.batch = new SpriteBatch();
-		this.gameBoard = new GameBoard();
-		this.gameBoard.createGame();
-		InputProcessor gameInputProcessor = new BricksInputProcessor(this);
-		Gdx.input.setInputProcessor(gameInputProcessor);
 	}
 
 	@Override
@@ -62,7 +52,13 @@ public class GameScreen implements Screen {
 	public void resize(int width, int height) { }
 
 	@Override
-	public void show() { }
+	public void show() {
+		this.camera = new OrthographicCamera(4.8f, 8);
+		this.camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+		this.batch = new SpriteBatch();
+		this.gameBoard = new GameBoard();
+		this.gameBoard.createGame();
+	}
 
 	@Override
 	public void hide() { }
@@ -81,9 +77,12 @@ public class GameScreen implements Screen {
 	public boolean touchDragged(int x, int y) {
 		touchPoint.set(x, y, 0);
 		camera.unproject(touchPoint);
-		Platform platform = gameBoard.getPlatform();
-		Rectangle platformArea = platform.getArea();
-		platform.setPosition(touchPoint.x - platformArea.width / 2, platformArea.y);
+		gameBoard.dragPlatform(touchPoint.x, touchPoint.y);
+		return true;
+	}
+	
+	public boolean touchUp(int x, int y) {
+		gameBoard.start();
 		return true;
 	}
 }

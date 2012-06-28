@@ -1,7 +1,6 @@
 package com.matheusbodo.tdc2012.model;
 
 import com.badlogic.gdx.math.Rectangle;
-import com.matheusbodo.tdc2012.CollisionDetector;
 
 public class Ball {
 
@@ -13,37 +12,39 @@ public class Ball {
 	private VerticalDirection verticalDirection = VerticalDirection.UP;
 	private HorizontalDirection horizontalDirection = HorizontalDirection.RIGHT;
 	
-	public void update(float deltaTime, Platform platform) {
-		
+	public void update(float deltaTime) {
 		area.x = area.x + deltaTime * HORIZONTAL_SPEED * horizontalDirection.getMultiplier();
 		area.y = area.y + deltaTime * VERTICAL_SPEED * verticalDirection.getMultiplier();
-		
-		if (CollisionDetector.checkTopCollision(area, platform.getArea())) {
-			verticalDirection = VerticalDirection.UP;
-			return;
-		}
-		
-		if (area.x < 0) {
-			area.x -= area.x;
-			horizontalDirection = HorizontalDirection.RIGHT;
-		} else if (area.x + area.width > GameBoard.WIDTH) {
-			area.x -= (area.x + area.width) - GameBoard.WIDTH;
-			horizontalDirection = HorizontalDirection.LEFT;
-		}
-		
-		if (area.y  < 0) {
-			area.y -= area.y;
-			verticalDirection = VerticalDirection.UP;
-		} else if (area.y + area.height > GameBoard.HEIGHT) {
-			area.y -= (area.y + area.height) - GameBoard.HEIGHT;
-			verticalDirection = VerticalDirection.DOWN;
-		}
 	}
 	
 	public void updateStartPosition(Platform platform) {
 		Rectangle platformArea = platform.getArea();
 		area.x = platformArea.x + (platformArea.width - area.width) / 2;
 		area.y = platformArea.y + platformArea.height;
+	}
+	
+	public void hitPlatform() {
+		verticalDirection = VerticalDirection.UP;
+	}
+	
+	public void hitLeftWall() {
+		area.x -= area.x;
+		horizontalDirection = HorizontalDirection.RIGHT;
+	}
+	
+	public void hitRightWall() {
+		area.x -= (area.x + area.width) - GameBoard.WIDTH;
+		horizontalDirection = HorizontalDirection.LEFT;
+	}
+	
+	public void hitDownWall() {
+		area.y -= area.y;
+		verticalDirection = VerticalDirection.UP;
+	}
+	
+	public void hitTopWall() {
+		area.y -= (area.y + area.height) - GameBoard.HEIGHT;
+		verticalDirection = VerticalDirection.DOWN;
 	}
 	
 	public Rectangle getArea() {

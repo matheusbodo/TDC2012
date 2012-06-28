@@ -1,15 +1,11 @@
 package com.matheusbodo.tdc2012;
 
 import com.badlogic.gdx.InputProcessor;
-import com.matheusbodo.tdc2012.screen.GameScreen;
+import com.matheusbodo.tdc2012.screen.ClickableScreen;
 
 public class BricksInputProcessor implements InputProcessor {
 
-	private GameScreen gameScreen;
-	
-	public BricksInputProcessor(GameScreen gameScreen) {
-		this.gameScreen = gameScreen;
-	}
+	private ClickableScreen clickableScreen;
 	
 	@Override
 	public boolean keyDown(int keycode) {
@@ -33,12 +29,12 @@ public class BricksInputProcessor implements InputProcessor {
 
 	@Override
 	public boolean touchUp(int x, int y, int pointer, int button) {
-		return false;
+		return clickableScreen.touchUp(x, y);
 	}
 
 	@Override
 	public boolean touchDragged(int x, int y, int pointer) {
-		return gameScreen.touchDragged(x, y);
+		return clickableScreen.touchDragged(x, y);
 	}
 
 	@Override
@@ -49,6 +45,10 @@ public class BricksInputProcessor implements InputProcessor {
 	@Override
 	public boolean scrolled(int amount) {
 		return false;
+	}
+	
+	public void setClickableScreen(ClickableScreen clickableScreen) {
+		this.clickableScreen = clickableScreen;
 	}
 
 }

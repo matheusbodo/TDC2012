@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.matheusbodo.tdc2012.BricksGame;
 import com.matheusbodo.tdc2012.GameAssets;
 
-public class MenuScreen implements Screen {
+public class MenuScreen implements Screen, ClickableScreen {
 
 	private BricksGame game;
 	
@@ -25,10 +25,6 @@ public class MenuScreen implements Screen {
 	
 	@Override
 	public void render(float delta) {
-		if (Gdx.input.justTouched()) {
-			game.setScreen(new GameScreen(game));
-		}
-		
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		camera.update();
@@ -64,6 +60,17 @@ public class MenuScreen implements Screen {
 	@Override
 	public void dispose() {
 		batch.dispose();
+	}
+
+	@Override
+	public boolean touchUp(int x, int y) {
+		game.setScreen(new GameScreen(game));
+		return true;
+	}
+
+	@Override
+	public boolean touchDragged(int x, int y) {
+		return false;
 	}
 
 }
