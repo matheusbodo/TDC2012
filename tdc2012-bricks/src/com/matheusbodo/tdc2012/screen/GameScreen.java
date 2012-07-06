@@ -83,6 +83,7 @@ public class GameScreen implements ClickableScreen {
 		batch.dispose();
 	}
 	
+	@Override
 	public boolean touchDragged(int x, int y) {
 		touchPoint.set(x, y, 0);
 		camera.unproject(touchPoint);
@@ -90,8 +91,14 @@ public class GameScreen implements ClickableScreen {
 		return true;
 	}
 	
+	@Override
 	public boolean touchUp(int x, int y) {
 		gameBoard.start();
 		return true;
+	}
+	
+	@Override
+	public boolean touchDown(int x, int y) {
+		return false;
 	}
 }

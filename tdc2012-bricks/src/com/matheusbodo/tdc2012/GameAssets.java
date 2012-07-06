@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class GameAssets {
@@ -16,6 +17,8 @@ public class GameAssets {
 	private TextureRegion ballRegion;
 	private TextureRegion brickRegion;
 	
+	private BitmapFont font;
+	
 	private Music music;
 	private Sound beep;
 	
@@ -27,6 +30,9 @@ public class GameAssets {
 		ballRegion = new TextureRegion(texture, 256, 286, 10, 10);
 		brickRegion = new TextureRegion(texture, 256, 256, 50, 30);
 		
+		font = new BitmapFont(Gdx.files.internal("data/font.fnt"), Gdx.files.internal("data/font.png"), false);
+		font.setScale(2f);
+		
 		music = Gdx.audio.newMusic(Gdx.files.internal("data/music.ogg"));
 		music.setLooping(true);
 		music.setVolume(0.5f);
@@ -36,6 +42,9 @@ public class GameAssets {
 	
 	public void dispose() {
 		texture.dispose();
+		font.dispose();
+		music.dispose();
+		beep.dispose();
 	}
 	
 	public Texture getTexture() {
@@ -68,5 +77,9 @@ public class GameAssets {
 	
 	public Sound getBeep() {
 		return beep;
+	}
+	
+	public BitmapFont getFont() {
+		return font;
 	}
 }
